@@ -33,7 +33,7 @@ public class dbHelper extends SQLiteOpenHelper
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.w(dbHelper.class.getName(),
-                "dbHelper.onCreate:"+CStrings[0]);
+                "dbHelper.onCreate1:"+CStrings[0]);
 
         if (CStrings!=null) {
             for (int i = 0; i < CStrings.length; i++) {
@@ -52,7 +52,7 @@ public class dbHelper extends SQLiteOpenHelper
     }
 
     public ArrayList<String> Query(String sql){
-        ArrayList<String> rows = new ArrayList<String>();
+        ArrayList<String> rows = new ArrayList<>();
 
 
         Log.e(LOG, sql);
