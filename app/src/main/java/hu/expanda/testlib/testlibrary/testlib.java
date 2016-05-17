@@ -15,11 +15,35 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class testlib  {
-
-
+        private String phpUrl="";
         public testlib() {
 
             Log.d(testlib.class.getName(), "testlib: constructor called.");
+        }
+        public testlib(String url) {
+
+            Log.d(testlib.class.getName(), "testlib: constructor called. url:"+url);
+            this.phpUrl = url;
+
+        }
+        public ArrayList<String> phpMessage(String message) {
+            String[] s={"",""};
+
+            s[0] = phpUrl;
+            s[1] = message;
+
+            PHPClient phpcli = null;
+            try {
+                phpcli = new PHPClient(phpUrl);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            phpcli.execute(s);
+            ArrayList response = null ;
+            while (response == null) {
+                response = phpcli.getResult();
+            }
+            return response;
         }
 
         public void doSomething() {
@@ -51,8 +75,12 @@ public class testlib  {
             return newTitle;
         }
         public ArrayList<String> liteQuery(ViewGroup layout,  String... params) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+
+            Log.d(testlib.class.getName(), "testlib: liteQuery() called. php exec start, url:"+phpUrl);
+            ArrayList<String> phpres = phpMessage("mantis_cegek");
+            if (phpres!=null) Log.d(testlib.class.getName(), "testlib: liteQuery() called. php executed, url:"+phpUrl+" result:"+phpres.toString());
             dbClient dbc = new dbClient(layout.getContext());
-            String sql = "insert into log (value) values('teszt')";
+            String sql = "insert into log (value) values('phpquery:"+phpres.toString()+"')";
             dbc.Exec(sql);
             sql = "select ID,VALUE from LOG order by id";
 
@@ -61,12 +89,6 @@ public class testlib  {
             Log.d(testlib.class.getName(), "testlib: liteQuery() called. res:"+(res!=null));
             if (res!=null) Log.d(testlib.class.getName(), "testlib: liteQuery() called. sql:"+sql+" result:"+res.toString());
             return res;
-
-
-
-
-
-
         }
 
 
