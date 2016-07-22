@@ -3,18 +3,19 @@ package hu.expanda.testlib.testlibrary;
 /**
  * Created by kende on 2016. 04. 27..
  */
-import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
+import com.symbol.*;
+import com.symbol.emdk.barcode.ScanDataCollection;
+import com.symbol.emdk.barcode.Scanner;
+
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-public class testlib  {
+public class testlib  implements Scanner.DataListener {
         private String phpUrl="";
         public testlib() {
 
@@ -90,7 +91,14 @@ public class testlib  {
             if (res!=null) Log.d(testlib.class.getName(), "testlib: liteQuery() called. sql:"+sql+" result:"+res.toString());
             return res;
         }
+        public String barcodeReader(){
+          String res = "";
+          return res;
+        }
 
 
+    @Override
+    public void onData(ScanDataCollection scanDataCollection) {
 
+    }
 }
